@@ -1,7 +1,7 @@
 CC = riscv64-unknown-elf-gcc
 CFLAGS = -nostdlib -static
 
-SRC = src/start.S src/main.c src/dummy.S
+SRC = src/start.S src/main.c src/quarter_round.S
 OUT = chacha
 
 all:
