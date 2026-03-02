@@ -1,7 +1,7 @@
 .section .text
-.globl chacha20_quarter_round
+.globl quarter_round
 
-chacha20_quarter_round:
+    quarter_round:
     # cargar valores desde memoria (32 bits)
     lw t0, 0(a0)      # t0 = *a
     lw t1, 0(a1)      # t1 = *b
