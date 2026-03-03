@@ -1,7 +1,7 @@
 typedef unsigned int uint32_t;
 
 // Nombre actualizado según la especificación
-extern void chacha20_quarter_round(uint32_t*, uint32_t*, uint32_t*, uint32_t*);
+extern void quarter_round(uint32_t*, uint32_t*, uint32_t*, uint32_t*);
 
 int main() {
     uint32_t a = 0x11111111;
@@ -9,7 +9,7 @@ int main() {
     uint32_t c = 0x9b8d6f43;
     uint32_t d = 0x01234567;
 
-    chacha20_quarter_round(&a, &b, &c, &d);
+    quarter_round(&a, &b, &c, &d);
 
     if (a == 0xea2a92f4 &&
         b == 0xcb1cf8ce &&
