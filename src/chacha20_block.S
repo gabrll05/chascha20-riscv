@@ -134,6 +134,92 @@ round_loop:
     addi s2, s2, -1
     bnez s2, round_loop
 
+
+    # =================================
+    # FEEDFORWARD
+    # working_state[i] += original_state[i]
+    # =================================
+
+    lw t0, 0(sp)
+    lw t1, 0(s0)
+    addw t0, t0, t1
+    sw t0, 0(sp)
+
+    lw t0, 4(sp)
+    lw t1, 4(s0)
+    addw t0, t0, t1
+    sw t0, 4(sp)
+
+    lw t0, 8(sp)
+    lw t1, 8(s0)
+    addw t0, t0, t1
+    sw t0, 8(sp)
+
+    lw t0, 12(sp)
+    lw t1, 12(s0)
+    addw t0, t0, t1
+    sw t0, 12(sp)
+
+    lw t0, 16(sp)
+    lw t1, 16(s0)
+    addw t0, t0, t1
+    sw t0, 16(sp)
+
+    lw t0, 20(sp)
+    lw t1, 20(s0)
+    addw t0, t0, t1
+    sw t0, 20(sp)
+
+    lw t0, 24(sp)
+    lw t1, 24(s0)
+    addw t0, t0, t1
+    sw t0, 24(sp)
+
+    lw t0, 28(sp)
+    lw t1, 28(s0)
+    addw t0, t0, t1
+    sw t0, 28(sp)
+
+    lw t0, 32(sp)
+    lw t1, 32(s0)
+    addw t0, t0, t1
+    sw t0, 32(sp)
+
+    lw t0, 36(sp)
+    lw t1, 36(s0)
+    addw t0, t0, t1
+    sw t0, 36(sp)
+
+    lw t0, 40(sp)
+    lw t1, 40(s0)
+    addw t0, t0, t1
+    sw t0, 40(sp)
+
+    lw t0, 44(sp)
+    lw t1, 44(s0)
+    addw t0, t0, t1
+    sw t0, 44(sp)
+
+    lw t0, 48(sp)
+    lw t1, 48(s0)
+    addw t0, t0, t1
+    sw t0, 48(sp)
+
+    lw t0, 52(sp)
+    lw t1, 52(s0)
+    addw t0, t0, t1
+    sw t0, 52(sp)
+
+    lw t0, 56(sp)
+    lw t1, 56(s0)
+    addw t0, t0, t1
+    sw t0, 56(sp)
+
+    lw t0, 60(sp)
+    lw t1, 60(s0)
+    addw t0, t0, t1
+    sw t0, 60(sp)
+
     # =================================
     # copiar working state -> state
     # =================================
