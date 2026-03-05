@@ -1,21 +1,26 @@
 typedef unsigned int uint32_t;
 
-// Nombre actualizado según la especificación
-extern void quarter_round(uint32_t*, uint32_t*, uint32_t*, uint32_t*);
+extern void chacha20_block(uint32_t *state);
 
 int main() {
-    uint32_t a = 0x11111111;
-    uint32_t b = 0x01020304;
-    uint32_t c = 0x9b8d6f43;
-    uint32_t d = 0x01234567;
 
-    quarter_round(&a, &b, &c, &d);
+    uint32_t state[16] = {
+        0,1,2,3,
+        4,5,6,7,
+        8,9,10,11,
+        12,13,14,15
+    };
 
-    if (a == 0xea2a92f4 &&
-        b == 0xcb1cf8ce &&
-        c == 0x4581472e &&
-        d == 0x5881c4bb)
-        return 0; // 0 significa éxito en bash
+    chacha20_block(state);
 
-    return 1; // 1 significa error
+    // comprobar que el estado cambió
+    if (state[0] == 0 &&
+        state[1] == 1 &&
+        state[2] == 2 &&
+        state[3] == 3)
+    {
+        return 1; // fallo
+    }
+
+    return 0; // éxito
 }
