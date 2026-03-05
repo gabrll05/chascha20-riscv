@@ -6,15 +6,16 @@
 
 chacha20_block:
 
-    # reservar espacio para working state + registros
-    addi sp, sp, -88
-    sd ra, 80(sp)
-    sd s1, 72(sp)
+    # reservar espacio stack
+    addi sp, sp, -96
+    sd ra, 88(sp)
+    sd s1, 80(sp)
+    sd s2, 72(sp)
 
     mv s0, a0        # s0 = puntero al estado original
 
     # ---------------------------------
-    # copiar estado a working state
+    # copiar state -> working state
     # ---------------------------------
 
     lw t0, 0(a0)
@@ -58,11 +59,18 @@ chacha20_block:
     sw s1, 60(sp)
 
     # =================================
+    # 10 DOUBLE ROUNDS
+    # =================================
+
+    li s2, 10
+
+round_loop:
+
+    # =================================
     # COLUMN ROUND
     # =================================
 
     # QR(0,4,8,12)
-
     addi a0, sp, 0
     addi a1, sp, 16
     addi a2, sp, 32
@@ -70,7 +78,6 @@ chacha20_block:
     call quarter_round
 
     # QR(1,5,9,13)
-
     addi a0, sp, 4
     addi a1, sp, 20
     addi a2, sp, 36
@@ -78,7 +85,6 @@ chacha20_block:
     call quarter_round
 
     # QR(2,6,10,14)
-
     addi a0, sp, 8
     addi a1, sp, 24
     addi a2, sp, 40
@@ -86,12 +92,47 @@ chacha20_block:
     call quarter_round
 
     # QR(3,7,11,15)
-
     addi a0, sp, 12
     addi a1, sp, 28
     addi a2, sp, 44
     addi a3, sp, 60
     call quarter_round
+
+    # =================================
+    # DIAGONAL ROUND
+    # =================================
+
+    # QR(0,5,10,15)
+    addi a0, sp, 0
+    addi a1, sp, 20
+    addi a2, sp, 40
+    addi a3, sp, 60
+    call quarter_round
+
+    # QR(1,6,11,12)
+    addi a0, sp, 4
+    addi a1, sp, 24
+    addi a2, sp, 44
+    addi a3, sp, 48
+    call quarter_round
+
+    # QR(2,7,8,13)
+    addi a0, sp, 8
+    addi a1, sp, 28
+    addi a2, sp, 32
+    addi a3, sp, 52
+    call quarter_round
+
+    # QR(3,4,9,14)
+    addi a0, sp, 12
+    addi a1, sp, 16
+    addi a2, sp, 36
+    addi a3, sp, 56
+    call quarter_round
+
+    # decrementar contador
+    addi s2, s2, -1
+    bnez s2, round_loop
 
     # =================================
     # copiar working state -> state
@@ -139,7 +180,10 @@ chacha20_block:
 
     # ---------------------------------
 
-    ld s1, 72(sp)
-    ld ra, 80(sp)
-    addi sp, sp, 88
+    ld s2, 72(sp)
+    ld s1, 80(sp)
+    ld ra, 88(sp)
+
+    addi sp, sp, 96
+
     ret
