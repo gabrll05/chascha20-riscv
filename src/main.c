@@ -1,9 +1,12 @@
 typedef unsigned int uint32_t;
+typedef unsigned char uint8_t;
 
-extern void chacha20_block(uint32_t *state);
+extern void chacha20_keystream(uint32_t *state, uint8_t *stream);
+
+// AL HACERLA GLOBAL, GDB LA ENCUENTRA POR NOMBRE
+uint8_t stream[64]; 
 
 int main() {
-
     uint32_t state[16] = {
         0x61707865,0x3320646e,0x79622d32,0x6b206574,
         0x03020100,0x07060504,0x0b0a0908,0x0f0e0d0c,
@@ -11,19 +14,6 @@ int main() {
         0x00000001,0x09000000,0x4a000000,0x00000000
     };
 
-    uint32_t expected[16] = {
-        0xe4e7f110,0x15593bd1,0x1fdd0f50,0xc47120a3,
-        0xc7f4d1c7,0x0368c033,0x9aaa2204,0x4e6cd4c3,
-        0x466482d2,0x09aa9f07,0x05d7c214,0xa2028bd9,
-        0xd19c12b5,0xb94e16de,0xe883d0cb,0x4e3c50a2
-    };
-
-    chacha20_block(state);
-
-    for(int i=0;i<16;i++){
-        if(state[i] != expected[i])
-            return 1;
-    }
-
-    return 0;
+    chacha20_keystream(state, stream);
+    while(1); 
 }
