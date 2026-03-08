@@ -6,11 +6,15 @@
 
 chacha20_block:
 
+    # =================================
+    # 1. EL PRÓLOGO (AQUÍ SE AGREGA s0)
+    # =================================
     # reservar espacio stack
     addi sp, sp, -96
     sd ra, 88(sp)
     sd s1, 80(sp)
     sd s2, 72(sp)
+    sd s0, 64(sp)    # <--- AQUI: Guardamos el registro s0 en el stack para no corromperlo
 
     mv s0, a0        # s0 = puntero al estado original
 
@@ -265,7 +269,11 @@ round_loop:
     sw s1, 60(s0)
 
     # ---------------------------------
+    # =================================
+    # 2. EL EPÍLOGO (AQUÍ SE RESTAURA s0)
+    # =================================
 
+    ld s0, 64(sp)    # <--- AQUI: Restauramos el valor original de s0 antes de retornar
     ld s2, 72(sp)
     ld s1, 80(sp)
     ld ra, 88(sp)
