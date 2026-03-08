@@ -2,7 +2,8 @@ CC = riscv64-unknown-elf-gcc
 
 CFLAGS = -O2 -march=rv64imac -mabi=lp64 -nostdlib -static
 
-SRC = start.S main.c chacha20_block.S quarter_round.S chacha20_keystream.S chacha20_encrypt.S
+# AQUI SOLO VAN LOS NOMBRES DE LOS ARCHIVOS
+SRC = start.S main.c chacha20_block.S quarter_round.S chacha20_encrypt.S syscall.S
 
 OUT = chacha
 
